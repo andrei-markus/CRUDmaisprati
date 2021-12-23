@@ -50,7 +50,7 @@ public class CRUD {
         Integer telefone = Integer.parseInt(scanner.nextLine().replaceAll("[^\\d]", "") );
 
         System.out.println("Digite a data de nascimento ddMMyyyy:");
-        LocalDate nasc = LocalDate.parse(scanner.nextLine().replaceAll("[^\\d]", ""), DateTimeFormatter.ofPattern("ddMMyyyy"));
+        LocalDate nasc = receberInputDate();
 
         System.out.println("Digite a nota final para cadastrar como aluno ou deixe em branco");
         String nota = scanner.nextLine().replaceAll("[^\\d.]", "");
@@ -86,7 +86,7 @@ public class CRUD {
                 break;
             case 3:
                 System.out.println("Digite a data de nascimento ddMMyyyy:");
-                LocalDate nasc = LocalDate.parse(scanner.nextLine().replaceAll("[^\\d]", ""), DateTimeFormatter.ofPattern("ddMMyyyy"));
+                LocalDate nasc = receberInputDate();
                 cadastros.get(ID).setDataNascimento(nasc);
                 break;
             default:
@@ -142,6 +142,18 @@ public class CRUD {
             System.out.println("Nenhuma alteração feita");
         }
 
+    }
+
+    private LocalDate receberInputDate(){
+        LocalDate inputDate;
+        while (true) {
+            try {
+            inputDate = LocalDate.parse(scanner.nextLine().replaceAll("[^\\d]", ""), DateTimeFormatter.ofPattern("ddMMyyyy"));
+            return inputDate;
+            } catch (Exception e) {
+                System.out.println("Data invalida, use o formato ddMMyyyy ex:  " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            }
+        }
     }
 
 }
