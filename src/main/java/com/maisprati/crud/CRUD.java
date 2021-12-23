@@ -8,9 +8,12 @@ import java.util.Scanner;
 public class CRUD {
     private static ArrayList<Pessoa> cadastros = new ArrayList<>();
     private static Scanner scanner;
+    private static DateTimeFormatter dateInputPattern = DateTimeFormatter.ofPattern("ddMMyyyy");
+    private static DateTimeFormatter dateOutputPattern =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static DateTimeFormatter dateTimeOutputPattern =  DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
 
     public CRUD() {
-        System.out.println("Olá");
         scanner = new Scanner(System.in);
         menu();
 
@@ -18,8 +21,6 @@ public class CRUD {
 
     private void menu(){
         while (true) {
-            // System.out.print("\033[H\033[2J");
-            // System.out.flush();
             System.out.println("1-Cadastrar 2-Listar 3-Editar 4-Deletar x-Fechar");
             String input = scanner.nextLine();
             switch (input) {
@@ -49,7 +50,7 @@ public class CRUD {
         System.out.println("Digite o telefone:");
         Integer telefone = Integer.parseInt(scanner.nextLine().replaceAll("[^\\d]", "") );
 
-        System.out.println("Digite a data de nascimento ddMMyyyy:");
+        System.out.println("Digite a data de nascimento dd/MM/yyyy ex:  " + LocalDate.now().format(dateOutputPattern));
         LocalDate nasc = receberInputDate();
 
         System.out.println("Digite a nota final para cadastrar como aluno ou deixe em branco");
@@ -85,7 +86,7 @@ public class CRUD {
                 cadastros.get(ID).setTelefone(telefone);
                 break;
             case 3:
-                System.out.println("Digite a data de nascimento ddMMyyyy:");
+                System.out.println("Digite a data de nascimento dd/MM/yyyy ex:  " + LocalDate.now().format(dateOutputPattern));
                 LocalDate nasc = receberInputDate();
                 cadastros.get(ID).setDataNascimento(nasc);
                 break;
@@ -116,9 +117,9 @@ public class CRUD {
             }
             System.out.println("Nome: " + cadastros.get(ID).getNome());
             System.out.println("Telefone: " + cadastros.get(ID).getTelefone());
-            System.out.println("Data nascimento: " + cadastros.get(ID).getDataNascimento());
-            System.out.println("Data cadastro: " + cadastros.get(ID).getDataCadastro());
-            System.out.println("Ultima alteração: " + cadastros.get(ID).getUltimaAlteracao());
+            System.out.println("Data nascimento: " + cadastros.get(ID).getDataNascimento().format(dateOutputPattern));
+            System.out.println("Data cadastro: " + cadastros.get(ID).getDataCadastro().format(dateTimeOutputPattern));
+            System.out.println("Ultima alteração: " + cadastros.get(ID).getUltimaAlteracao().format(dateTimeOutputPattern));
             if (cadastros.get(ID) instanceof Aluno) {
                 System.out.println("Nota Final: " + ((Aluno) cadastros.get(ID)).getNotaFinal());
             }
@@ -148,10 +149,10 @@ public class CRUD {
         LocalDate inputDate;
         while (true) {
             try {
-            inputDate = LocalDate.parse(scanner.nextLine().replaceAll("[^\\d]", ""), DateTimeFormatter.ofPattern("ddMMyyyy"));
+            inputDate = LocalDate.parse(scanner.nextLine().replaceAll("[^\\d]", ""), dateInputPattern);
             return inputDate;
             } catch (Exception e) {
-                System.out.println("Data invalida, use o formato ddMMyyyy ex:  " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                System.out.println("Data invalida, use o formato dd/MM/yyyy ex:  " + LocalDate.now().format(dateOutputPattern));
             }
         }
     }
