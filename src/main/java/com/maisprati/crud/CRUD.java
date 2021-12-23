@@ -96,9 +96,32 @@ public class CRUD {
     }
 
     private void listar(){
-        System.out.println("ID   Nome     Classe    Data nascimento");
+        if (cadastros.isEmpty()) {
+            System.out.println("Nenhum cadastro encontrado");
+            return;
+        }
+        System.out.println("ID   Nome     Classe");
         for (int i = 0; i < cadastros.size(); i++) {
-            System.out.println(i + "   " + cadastros.get(i).getNome() + "   " + cadastros.get(i).getClass().getSimpleName() + "   " + cadastros.get(i).getDataNascimento());
+            System.out.println(i + "   " + cadastros.get(i).getNome() + "   " + cadastros.get(i).getClass().getSimpleName());
+        }
+        System.out.println("Digite o ID para ver detalhes");
+        String input = scanner.nextLine().replaceAll("[^\\d]", "");
+        if (input.isBlank()) {
+            return;            
+        } else {
+            int ID = Integer.parseInt(input );
+            if (ID > cadastros.size() - 1) {
+                System.out.println("Usuário não cadastrado");
+                return;
+            }
+            System.out.println("Nome: " + cadastros.get(ID).getNome());
+            System.out.println("Telefone: " + cadastros.get(ID).getTelefone());
+            System.out.println("Data nascimento: " + cadastros.get(ID).getDataNascimento());
+            System.out.println("Data cadastro: " + cadastros.get(ID).getDataCadastro());
+            System.out.println("Ultima alteração: " + cadastros.get(ID).getUltimaAlteracao());
+            if (cadastros.get(ID) instanceof Aluno) {
+                System.out.println("Nota Final: " + ((Aluno) cadastros.get(ID)).getNotaFinal());
+            }
         }
     }
 
