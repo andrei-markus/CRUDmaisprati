@@ -45,10 +45,10 @@ public class CRUD {
 
     private void cadastrar(){
         System.out.println("Digite o nome:");
-        String nome = scanner.nextLine();
+        String nome = receberInputNome();
 
         System.out.println("Digite o telefone:");
-        Integer telefone = Integer.parseInt(scanner.nextLine().replaceAll("[^\\d]", "") );
+        Integer telefone = receberInputTelefone();
 
         System.out.println("Digite a data de nascimento dd/MM/yyyy ex:  " + LocalDate.now().format(dateOutputPattern));
         LocalDate nasc = receberInputDate();
@@ -76,13 +76,13 @@ public class CRUD {
         switch (edit) {
             case 1:
                 System.out.println("Digite o nome:");
-                String nome = scanner.nextLine();
+                String nome = receberInputNome();
                 cadastros.get(ID).setNome(nome);
                 break;
             
             case 2:
                 System.out.println("Digite o telefone:");
-                Integer telefone = Integer.parseInt(scanner.nextLine().replaceAll("[^\\d]", "") );
+                Integer telefone = receberInputTelefone();
                 cadastros.get(ID).setTelefone(telefone);
                 break;
             case 3:
@@ -143,6 +143,25 @@ public class CRUD {
             System.out.println("Nenhuma alteração feita");
         }
 
+    }
+
+    private String receberInputNome() {
+        String inputNome;
+        while (true) {
+            inputNome = scanner.nextLine();
+            if (!inputNome.isBlank()) {
+                return inputNome;
+            }
+            System.out.println("Digite o nome do cadastro");
+        }
+    }
+
+    private int receberInputTelefone(){
+        try {
+            return Integer.parseInt(scanner.nextLine().replaceAll("[^\\d]", ""));
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     private LocalDate receberInputDate(){
