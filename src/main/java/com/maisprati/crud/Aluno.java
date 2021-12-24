@@ -11,6 +11,12 @@ public class Aluno extends Pessoa {
         super.setAlteracao();
     }
 
+    Aluno(Pessoa pessoa, float notaFinal){
+        super(pessoa);
+        this.notaFinal = notaFinal;
+        super.setAlteracao();
+    }
+
     public float getNotaFinal() {
         return notaFinal;
     }

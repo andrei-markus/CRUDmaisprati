@@ -16,7 +16,6 @@ public class CRUD {
     public CRUD() {
         scanner = new Scanner(System.in);
         menu();
-
     }
 
     private void menu(){
@@ -54,12 +53,12 @@ public class CRUD {
         LocalDate nasc = receberInputDate();
 
         System.out.println("Digite a nota final para cadastrar como aluno ou deixe em branco");
-        String nota = scanner.nextLine().replaceAll("[^\\d.]", "");
-        if (nota.isEmpty()) {
+        Float nota = receberInputNota();
+        if (nota.isNaN()) {
             cadastros.add(new Pessoa(nome, telefone, nasc));
         }
         else {
-            cadastros.add(new Aluno(nome, telefone, nasc, Float.parseFloat(nota) ));
+            cadastros.add(new Aluno(nome, telefone, nasc, nota ));
         }
     }
 
@@ -70,7 +69,8 @@ public class CRUD {
             System.out.println("Usuário não cadastrado");
             return;
         }
-        System.out.println("Editando o cadastro de " + cadastros.get(ID).getNome() + " | 1 - Nome 2 - telefone 3- Data de nascimento");
+        String editText = "Editando o cadastro de " + cadastros.get(ID).getNome() + " | 1-Nome  2-telefone  3-Data de nascimento  4-Nota Final";
+        System.out.println(editText);
         int edit = Integer.parseInt(scanner.nextLine().replaceAll("[^\\d]", "") );
         
         switch (edit) {
@@ -89,6 +89,15 @@ public class CRUD {
                 System.out.println("Digite a data de nascimento dd/MM/yyyy ex:  " + LocalDate.now().format(dateOutputPattern));
                 LocalDate nasc = receberInputDate();
                 cadastros.get(ID).setDataNascimento(nasc);
+                break;
+            case 4 :
+                System.out.println("Digite a Nota:");
+                Float nota = receberInputNota();
+                if (nota.isNaN()) {
+                    cadastros.set(ID, new Pessoa(cadastros.get(ID)) );
+                } else {
+                    cadastros.set(ID, new Aluno(cadastros.get(ID), nota));
+                }
                 break;
             default:
                 break;
@@ -174,6 +183,15 @@ public class CRUD {
                 System.out.println("Data invalida, use o formato dd/MM/yyyy ex:  " + LocalDate.now().format(dateOutputPattern));
             }
         }
+    }
+
+    private Float receberInputNota(){
+        String nota;
+        nota = scanner.nextLine().replaceAll("[^\\d.]", "");
+        if (nota.isBlank()) {
+            return Float.NaN;
+        }
+        return Float.parseFloat(nota);
     }
 
 }

@@ -21,6 +21,14 @@ public class Pessoa {
         this.setAlteracao();
     }
     
+    public Pessoa(Pessoa pessoa) {
+        this.nome = pessoa.nome;
+        this.telefone = pessoa.telefone;
+        this.dataNascimento = pessoa.dataNascimento;
+        this.dataCadastro = pessoa.dataCadastro;
+        this.setAlteracao();
+    }
+
     public String getNome() {
         return nome;
     }
