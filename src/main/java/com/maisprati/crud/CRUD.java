@@ -64,7 +64,11 @@ public class CRUD {
 
     private void editar(){
         System.out.println("Digite o ID do cadastro a editar");
-        int ID = Integer.parseInt(scanner.nextLine().replaceAll("[^\\d]", "") );
+        String input = scanner.nextLine().replaceAll("[^\\d]", "");
+        if (input.isBlank()) {
+            return;
+        }
+        int ID = Integer.parseInt(input);
         if (ID > cadastros.size() - 1) {
             System.out.println("Usuário não cadastrado");
             return;
@@ -137,7 +141,11 @@ public class CRUD {
 
     private void deletar(){
         System.out.println("Digite o ID do cadastro a excluir");
-        int ID = Integer.parseInt(scanner.nextLine().replaceAll("[^\\d]", "") );
+        String input = scanner.nextLine().replaceAll("[^\\d]", "");
+        if (input.isBlank()) {
+            return;
+        }
+        int ID = Integer.parseInt(input);
         if (ID > cadastros.size() - 1) {
             System.out.println("Usuário não cadastrado");
             return;
